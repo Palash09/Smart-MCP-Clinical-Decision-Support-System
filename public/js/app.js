@@ -3,8 +3,8 @@ let currentPersona = null;
 let currentPatient = null;
 let patients = [];
 
-// API base URL
-const API_BASE = 'http://localhost:3000/api';
+// API base URL - dynamically set based on environment
+const API_BASE = window.location.origin + '/api';
 
 // Pagination state
 let currentPage = 1;
@@ -12,6 +12,7 @@ const patientsPerPage = 10;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, API_BASE:', API_BASE);
     initializePersonaSelection();
     loadPatients();
     // Persona switching from navbar dropdown
@@ -405,7 +406,9 @@ function displayPharmacistInteractionCheck() {
 async function loadPatients() {
     try {
         console.log('Loading patients from API...');
+        console.log('Fetching from URL:', `${API_BASE}/patients`);
         const response = await fetch(`${API_BASE}/patients`);
+        console.log('Response status:', response.status);
         const data = await response.json();
         
         console.log('Patient data received:', data);
