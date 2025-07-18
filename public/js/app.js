@@ -94,11 +94,11 @@ function updateUIForPersona() {
   }
 }
 
-// On load, hide patient table until persona is selected
+// On load, show patient table (patients are loaded immediately)
 window.addEventListener('DOMContentLoaded', function() {
   const patientListCard = document.querySelector('.card.purple-gradient:has(#patientList)');
   if (patientListCard) {
-    patientListCard.style.display = 'none';
+    patientListCard.style.display = 'block';
   }
 });
 
@@ -404,29 +404,37 @@ function displayPharmacistInteractionCheck() {
 // Load patients from API
 async function loadPatients() {
     try {
-        document.getElementById('mainApp').style.display = 'none'; // Hide main app while loading
+        console.log('Loading patients from API...');
         const response = await fetch(`${API_BASE}/patients`);
         const data = await response.json();
         
+        console.log('Patient data received:', data);
+        
         if (data.success) {
             patients = data.data;
+            console.log('Loaded', patients.length, 'patients');
             displayPatients(patients);
             updateDashboardStats();
         } else {
+            console.error('Failed to load patients:', data);
             showError('Failed to load patients');
         }
     } catch (error) {
+        console.error('Error loading patients:', error);
         showError('Error loading patients: ' + error.message);
-    } finally {
-        document.getElementById('mainApp').style.display = 'block'; // Show main app after loading
     }
 }
 
 // Display patients in the list with pagination, including location and risk level columns
 function displayPatients(patientList) {
+    console.log('displayPatients called with:', patientList?.length, 'patients');
     const patientListElement = document.getElementById('patientList');
-    if (!patientListElement) return;
+    if (!patientListElement) {
+        console.error('Patient list element not found!');
+        return;
+    }
     if (!Array.isArray(patientList) || patientList.length === 0) {
+        console.log('No patients to display');
         patientListElement.innerHTML = '<div class="text-muted">No patients found.</div>';
         return;
     }
