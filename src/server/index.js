@@ -123,9 +123,13 @@ async function initializeServices() {
     await initializeFHIRClient();
     logger.info('FHIR client initialized successfully');
     
-    // Initialize MCP server
-    await initializeMCPServer();
-    logger.info('MCP server initialized successfully');
+    // Initialize MCP server (optional - fallback mode for deployment)
+    const mcpServer = await initializeMCPServer();
+    if (mcpServer) {
+      logger.info('MCP server initialized successfully');
+    } else {
+      logger.info('MCP server running in fallback mode');
+    }
     
   } catch (error) {
     logger.error('Failed to initialize services:', error);
