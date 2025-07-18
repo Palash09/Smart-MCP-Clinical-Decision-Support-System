@@ -1,0 +1,6 @@
+# Allow FHIR bundle files for deployment
+!*.fhir-bundle.xml
+# Exclude other files
+*.log
+*.tmp
+*.bak

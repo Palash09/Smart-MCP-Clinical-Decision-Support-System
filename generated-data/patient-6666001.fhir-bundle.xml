@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+    <type value="transaction"/>
+
+  <entry>
+  <resource>
+    
+    
+  <Patient>
+    <id value="6666001"/>
+    <text>
+      <status value="generated"/>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Sophia Reynolds</p>
+      </div>
+    </text>
+    <identifier>
+      <use value="usual"/>
+      <type>
+        <coding>
+          <system value="http://hl7.org/fhir/v2/0203"/>
+          <code value="MR"/>
+          <display value="Medical record number"/>
+        </coding>
+        <text value="Medical record number"/>
+      </type>
+      <system value="http://hospital.smarthealthit.org"/>
+      <value value="6666001"/>
+    </identifier>
+    <name>
+      <use value="official"/>
+      <family value="Reynolds"/>
+      <given value="Sophia"/>
+    </name>
+    <telecom>
+      <system value="email"/>
+      <value value="demoally@hspc.com"/>
+    </telecom>
+    <gender value="female" />
+    <birthDate value="2010-12-16" />
+    <active value="true"/>
+  </Patient>
+  
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="Patient/6666001"/>
+  </request>
+</entry>
+<entry>
+  <resource>
+    
+    
+<MedicationOrder>
+  <id value="MedicationOrder-353"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      Albuterol 0.09 MG/ACTUAT [Proventil] (rxnorm: )
+    </div>
+  </text>
+
+  <status value="" />
+  <patient>
+    <reference value="Patient/6666001"/>
+  </patient>
+
+  <medicationCodeableConcept>
+    <coding>
+        <system value="http://www.nlm.nih.gov/research/umls/rxnorm"/>
+        <code value=""/>
+        <display value="Albuterol 0.09 MG/ACTUAT [Proventil]"/>
+    </coding>
+    <text value="Albuterol 0.09 MG/ACTUAT [Proventil]"/>
+  </medicationCodeableConcept>
+
+  <dosageInstruction>
+    <timing>
+    </timing>
+    <asNeededBoolean value="true"/>
+    
+    <text value="prn"/>
+  </dosageInstruction>
+</MedicationOrder>
+
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="MedicationOrder/MedicationOrder-353"/>
+  </request>
+</entry>
+<entry>
+  <resource>
+    
+    
+<MedicationOrder>
+  <id value="MedicationOrder-354"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      60 ACTUAT Fluticasone propionate 0.045 MG/ACTUAT / salmeterol 0.021 MG/ACTUAT Metered Dose Inhaler [Advair] (rxnorm: )
+    </div>
+  </text>
+
+  <status value="" />
+  <patient>
+    <reference value="Patient/6666001"/>
+  </patient>
+
+  <medicationCodeableConcept>
+    <coding>
+        <system value="http://www.nlm.nih.gov/research/umls/rxnorm"/>
+        <code value=""/>
+        <display value="60 ACTUAT Fluticasone propionate 0.045 MG/ACTUAT / salmeterol 0.021 MG/ACTUAT Metered Dose Inhaler [Advair]"/>
+    </coding>
+    <text value="60 ACTUAT Fluticasone propionate 0.045 MG/ACTUAT / salmeterol 0.021 MG/ACTUAT Metered Dose Inhaler [Advair]"/>
+  </medicationCodeableConcept>
+
+  <dosageInstruction>
+    <timing>
+    </timing>
+    <text value="1 puff bid"/>
+  </dosageInstruction>
+</MedicationOrder>
+
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="MedicationOrder/MedicationOrder-354"/>
+  </request>
+</entry>
+<entry>
+  <resource>
+    
+    
+<MedicationOrder>
+  <id value="MedicationOrder-355"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      Prednisone Oral Tablet (rxnorm: )
+    </div>
+  </text>
+
+  <status value="" />
+  <patient>
+    <reference value="Patient/6666001"/>
+  </patient>
+
+  <medicationCodeableConcept>
+    <coding>
+        <system value="http://www.nlm.nih.gov/research/umls/rxnorm"/>
+        <code value=""/>
+        <display value="Prednisone Oral Tablet"/>
+    </coding>
+    <text value="Prednisone Oral Tablet"/>
+  </medicationCodeableConcept>
+
+  <dosageInstruction>
+    <timing>
+    </timing>
+    <asNeededBoolean value="true"/>
+    
+    <text value="prn"/>
+  </dosageInstruction>
+</MedicationOrder>
+
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="MedicationOrder/MedicationOrder-355"/>
+  </request>
+</entry>
+<entry>
+  <resource>
+    
+    
+<MedicationOrder>
+  <id value="MedicationOrder-356"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      Singulair Pill (rxnorm: )
+    </div>
+  </text>
+
+  <status value="" />
+  <patient>
+    <reference value="Patient/6666001"/>
+  </patient>
+
+  <medicationCodeableConcept>
+    <coding>
+        <system value="http://www.nlm.nih.gov/research/umls/rxnorm"/>
+        <code value=""/>
+        <display value="Singulair Pill"/>
+    </coding>
+    <text value="Singulair Pill"/>
+  </medicationCodeableConcept>
+
+  <dosageInstruction>
+    <timing>
+    </timing>
+    <text value="1 tab qd"/>
+  </dosageInstruction>
+</MedicationOrder>
+
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="MedicationOrder/MedicationOrder-356"/>
+  </request>
+</entry>
+
+</Bundle>
