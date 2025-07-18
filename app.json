@@ -1,0 +1,33 @@
+{
+  "name": "Smart CDSS",
+  "description": "Smart Clinical Decision Support System",
+  "repository": "https://github.com/your-username/smart-cdss",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "express", "healthcare", "clinical", "decision-support"],
+  "image": "heroku/nodejs",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "addons": [],
+  "env": {
+    "NODE_ENV": {
+      "description": "Node environment",
+      "value": "production"
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "description": "Production npm config",
+      "value": "false"
+    }
+  },
+  "scripts": {
+    "postdeploy": "echo 'Smart CDSS deployed successfully!'"
+  }
+} 

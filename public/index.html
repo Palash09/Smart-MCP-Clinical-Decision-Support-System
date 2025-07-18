@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart CDSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --light-bg: #ecf0f1;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important; /* Changed from var(--primary-color) to white for visibility */
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .persona-card {
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .persona-card:hover {
+            border-color: var(--secondary-color);
+            background-color: #f8f9fa;
+        }
+
+        .persona-card.selected {
+            border-color: var(--secondary-color);
+            background-color: #e3f2fd;
+        }
+
+        .patient-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+
+        .alert-custom {
+            border-radius: 10px;
+            border: none;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+        }
+
+        .risk-high { color: var(--accent-color); font-weight: bold; }
+        .risk-medium { color: var(--warning-color); font-weight: bold; }
+        .risk-low { color: var(--success-color); font-weight: bold; }
+
+        /* Persona dropdown color fix - black text on white background */
+        .persona-dropdown .dropdown-toggle, .persona-dropdown-toggle {
+            color: #000 !important;
+            background: #fff !important;
+            border-radius: 8px;
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            font-weight: 500;
+        }
+        .persona-dropdown .dropdown-toggle:hover, .persona-dropdown-toggle:hover {
+            background: #f8f9fa !important;
+            border-color: #adb5bd;
+            color: #000 !important;
+        }
+        .persona-dropdown .dropdown-toggle:after, .persona-dropdown-toggle:after {
+            color: #000 !important;
+        }
+        .persona-dropdown .dropdown-menu {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+        .persona-dropdown .dropdown-item {
+            color: #000 !important;
+        }
+        .persona-dropdown .dropdown-item:hover {
+            background: #f8f9fa;
+            color: #000 !important;
+        }
+        .persona-dropdown .dropdown-item.active, .persona-dropdown .dropdown-item:active {
+            background: #007bff;
+            color: #fff !important;
+        }
+        
+        /* Fix navbar persona text color */
+        .navbar-text {
+            color: #fff !important;
+        }
+        
+        #currentPersona {
+            color: #fff !important;
+        }
+
+        /* Clinical buttons uniform size and linear layout */
+        #clinicalButtonsRow .btn {
+            width: 100% !important;
+            margin-bottom: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: left;
+            border-radius: 8px;
+        }
+        #clinicalButtonsRow .col-md-3 {
+            width: 100%;
+            max-width: 100%;
+            flex: 0 0 100%;
+        }
+        #clinicalButtonsRow {
+            flex-direction: column;
+        }
+
+        /* Full-width patient table */
+        #patientList .table {
+            width: 100% !important;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        /* New uniform purple gradient for all cards */
+        .purple-gradient {
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-heartbeat me-2"></i>
+                Smart CDSS
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text dropdown persona-dropdown">
+                    <i class="fas fa-user-md me-1"></i>
+                    <span id="currentPersona">Select Persona</span>
+                    <a href="#" class="dropdown-toggle persona-dropdown-toggle" id="personaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="personaDropdown" id="personaDropdownMenu" style="min-width:180px;">
+                        <li><a class="dropdown-item persona-switch" data-persona="physician" href="#">Physician</a></li>
+                        <li><a class="dropdown-item persona-switch" data-persona="pharmacist" href="#">Pharmacist</a></li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Persona Selection -->
+        <div id="personaSelection" class="mb-4">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-users me-2"></i>
+                Select Your Role
+            </h2>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="card persona-card" data-persona="physician">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user-md feature-icon"></i>
+                            <h5 class="card-title">Physician</h5>
+                            <p class="card-text">Primary care physician with full access to patient data and clinical decision support.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card persona-card" data-persona="pharmacist">
+                        <div class="card-body text-center">
+                            <i class="fas fa-pills feature-icon"></i>
+                            <h5 class="card-title">Pharmacist</h5>
+                            <p class="card-text">Clinical pharmacist with focus on medication management and drug interactions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Application (hidden until persona selected) -->
+        <div id="mainApp" style="display: none;">
+            <!-- Dashboard -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card purple-gradient">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">
+                                <i class="fas fa-tachometer-alt me-2"></i>
+                                Clinical Dashboard
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card stats-card text-center">
+                                        <div class="card-body">
+                                            <h3 id="totalPatients">0</h3>
+                                            <p class="mb-0">Total Patients</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card stats-card text-center">
+                                        <div class="card-body">
+                                            <h3 id="activeAlerts">0</h3>
+                                            <p class="mb-0">Active Alerts</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card stats-card text-center">
+                                        <div class="card-body">
+                                            <h3 id="pendingDecisions">0</h3>
+                                            <p class="mb-0">Pending Decisions</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card stats-card text-center">
+                                        <div class="card-body">
+                                            <h3 id="riskPatients">0</h3>
+                                            <p class="mb-0">High Risk Patients</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Management: Full-width table, details as modal -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card purple-gradient">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">
+                                <i class="fas fa-users me-2"></i>
+                                Patient List
+                            </h5>
+                        </div>
+                        <div class="card-body position-relative">
+                            <div id="patientList" class="table-responsive">
+                                <!-- Patient table will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Details Modal -->
+            <div class="modal fade" id="patientDetailsModal" tabindex="-1" aria-labelledby="patientDetailsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header purple-gradient text-white">
+                            <h5 class="modal-title" id="patientDetailsModalLabel">
+                                <i class="fas fa-user me-2"></i>Patient Details
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="patientDetails">
+                                        <div class="text-center text-muted">
+                                            <i class="fas fa-user-circle fa-3x mb-3"></i>
+                                            <p>Loading patient details...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Smart CDSS in Modal -->
+                                    <div class="card purple-gradient">
+                                        <div class="card-header bg-warning text-dark">
+                                            <h5 class="mb-0">
+                                                <i class="fas fa-brain me-2"></i>
+                                                Smart CDSS
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row mb-3" id="clinicalButtonsRow">
+                                                <!-- Clinical buttons will be rendered here by JS -->
+                                            </div>
+                                            <div id="decisionResults" class="mt-3">
+                                                <!-- Results will be displayed here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 
