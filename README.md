@@ -1,6 +1,6 @@
 # Smart CDSS
 
-A modern clinical decision support system designed to assist healthcare professionals with clinical decision-making.
+A modern clinical decision support system designed to assist healthcare professionals with clinical decision-making, leveraging model-context protocol.
 
 ## 🚀 Features
 
@@ -14,9 +14,8 @@ A modern clinical decision support system designed to assist healthcare professi
 
 ### Persona-Based Access
 - **Physician**: Full access to all features with prescribing capabilities
-- **Nurse**: Patient monitoring and basic clinical support
 - **Pharmacist**: Focused on medication management and drug interactions
-- **Researcher**: Access to analytics and predictive modeling features
+
 
 ### Technical Features
 - **No Database Dependencies**: Uses in-memory storage for demo purposes
@@ -41,7 +40,6 @@ A modern clinical decision support system designed to assist healthcare professi
 
 ### Services
 - **Clinical Decision Engine**: Core decision-making logic
-- **Advanced Clinical Engine**: Phase 3 features with predictive analytics
 - **Drug Interaction Service**: Medication safety checking
 - **Alert Service**: Real-time clinical alerts
 - **Risk Assessment Service**: Multi-domain risk analysis
@@ -105,41 +103,14 @@ This will test all major functionality including:
 - Predictive analytics
 - Alert system
 
-## 📚 API Endpoints
-
-### Health & Status
-- `GET /health` - Application health check
-
-### Patient Management
-- `GET /api/patients` - Get all patients
-- `GET /api/patients/:id` - Get patient details
-
-### Clinical Decision Support
-- `POST /api/decisions/analyze` - Basic clinical analysis
-- `POST /api/decisions/interactions` - Check drug interactions
-- `POST /api/decisions/validate` - Validate medications
-- `POST /api/decisions/risk` - Basic risk assessment
-
-### Advanced Features (Phase 3)
-- `POST /api/advanced/analyze` - Advanced patient analysis
-- `POST /api/advanced/risk-stratification` - Comprehensive risk stratification
-- `POST /api/advanced/predictions` - Predictive analytics
-- `POST /api/advanced/alerts` - Real-time alerts
-- `POST /api/advanced/specific-predictions` - Specific prediction types
-- `POST /api/advanced/risk-assessment` - Domain-specific risk assessment
-- `POST /api/advanced/condition-recommendations` - Condition-specific recommendations
-
-### Disabled Features
-- `POST /api/advanced/recommendations` - Advanced recommendations (disabled)
 
 ## 🎯 Usage
 
 ### 1. Select Your Role
 Choose from four personas:
 - **Physician**: Full clinical access
-- **Nurse**: Patient monitoring focus
 - **Pharmacist**: Medication management
-- **Researcher**: Analytics and research
+
 
 ### 2. Patient Management
 - View patient list with demographics
@@ -171,87 +142,6 @@ OPENAI_API_KEY=your_api_key_here
 # Client Configuration
 CLIENT_URL=http://localhost:3001
 ```
-
-### Demo Data
-The application includes pre-loaded demo patients:
-- **John Doe**: 45-year-old with diabetes and hypertension
-- **Jane Smith**: 49-year-old with asthma and obesity
-- **Robert Johnson**: 59-year-old with COPD and heart failure
-
-## 🚫 Limitations
-
-- **No Database**: Uses in-memory storage (data lost on restart)
-- **Demo Mode**: Designed for demonstration purposes
-- **Limited LLM**: Basic fallback responses without OpenAI API key
-- **No Authentication**: No user authentication system
-- **Disabled Features**: Advanced recommendations feature is disabled
-
-## 🔮 Future Enhancements
-
-- **Database Integration**: Add persistent storage options
-- **Authentication**: Implement user authentication and authorization
-- **FHIR Integration**: Full FHIR resource support
-- **Real-time Collaboration**: Multi-user support
-- **Mobile App**: Native mobile application
-- **Advanced Analytics**: Enhanced predictive models
-- **Integration APIs**: Connect with external healthcare systems
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue in the repository
-- Check the API documentation
-- Review the test files for usage examples
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-1. **Server won't start**
-   - Check if port 3000 is available
-   - Ensure Node.js version is 18+
-   - Verify all dependencies are installed
-
-2. **API endpoints not responding**
-   - Check server logs for errors
-   - Verify the server is running
-   - Test with the health endpoint first
-
-3. **UI not loading**
-   - Check browser console for errors
-   - Verify static files are being served
-   - Clear browser cache
-
-4. **LLM features not working**
-   - Add OpenAI API key to environment
-   - Check API key validity
-   - Review network connectivity
-
-### Debug Mode
-
-Enable debug logging:
-```bash
-DEBUG=* npm run dev
-```
-
-## 📊 Performance
-
-- **Response Time**: < 500ms for most endpoints
-- **Concurrent Users**: Supports multiple simultaneous users
-- **Memory Usage**: ~50MB base memory usage
-- **CPU Usage**: Minimal CPU overhead
 
 ---
 
